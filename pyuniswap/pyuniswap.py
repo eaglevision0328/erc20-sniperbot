@@ -8,11 +8,11 @@ from functools import wraps
 
 class Token:
     # bnb
-    ETH_ADDRESS = Web3.toChecksumAddress('0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c')
+    ETH_ADDRESS = Web3.toChecksumAddress('')
 
     MAX_AMOUNT = int('0x' + 'f' * 64, 16)
 
-    def __init__(self, address, provider=None, provider_wss="wss://bsc-ws-node.nariox.org:443"):
+    def __init__(self, address, provider=None, provider_wss=""):
         self.address = Web3.toChecksumAddress(address)
         self.provider = os.environ['PROVIDER'] if not provider else provider
         self.provider_wss = provider_wss
@@ -24,10 +24,10 @@ class Token:
         self.web3 = Web3(Web3.HTTPProvider(self.provider, session=session))
         self.web3_wss = Web3(Web3.WebsocketProvider(self.provider_wss))
         self.wallet_address = None
-        self.mytoken_address = Web3.toChecksumAddress("0xF81cF14D3a662936034aE2B0427047283d1141BC")
+        self.mytoken_address = Web3.toChecksumAddress("")
         # bnb
         self.router = self.web3.eth.contract(
-            address=Web3.toChecksumAddress('0x10ed43c718714eb63d5aa57b78b54704e256024e'),
+            address=Web3.toChecksumAddress(''),
             abi=json.load(open("pyuniswap/abi_files_bnb/" + "router.abi")))
         self.erc20_abi = json.load(
             open("pyuniswap/abi_files_bnb/" + "erc20.abi"))
@@ -37,7 +37,7 @@ class Token:
         # self.gas_limit = 297255
         # self.gas_limit = 500000
 
-    def get_presale_owner(self, presale_address="0xbaCEbAd5993a19c7188Db1cC8D0F748C9Af1689A", presale_id=2033):
+    def get_presale_owner(self, presale_address="", presale_id=2033):
         presale_contract = self.web3.eth.contract(address=Web3.toChecksumAddress(presale_address), abi=self.presale_abi)
         return presale_contract.functions.presaleOwners(presale_id).call()
 
